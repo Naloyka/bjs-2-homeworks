@@ -11,12 +11,8 @@ function getArrayParams(arr) {
     
     sum = sum + arr[i]
 
-    if (arr[i] < min) {
-      min = arr[i];
-    }
-    else if (arr[i] > max) {
-      max = arr[i];
-    }
+    if (arr[i] < min) {min = arr[i] }
+    if (arr[i] > max) { max = arr[i] }
    
   }
 
