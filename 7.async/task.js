@@ -6,21 +6,23 @@ class AlarmClock {
 
     addClock(time, callback, id) {
 
-        if (id === undefined) throw new Error('error text');
+        if (id === undefined) {
+            throw new Error('error text')
+        };
         if (this.alarmCollection.some(values => values.id === id)) {
             return console.error("Ошибка")
         };
 
-        return this.alarmCollection.push({ id, time, callback });
+        this.alarmCollection.push({ id, time, callback });
 
     }
 
     removeClock(id) {
-        let a = this.alarmCollection.length;
+        let lengthAlarmCollection = this.alarmCollection.length;
 
         this.alarmCollection = this.alarmCollection.filter(values => values.id !== id);
-        let c = this.alarmCollection.length;
-        return a > c
+
+        return lengthAlarmCollection > this.alarmCollection.length
     }
 
     getCurrentFormattedTime() {
@@ -41,23 +43,29 @@ class AlarmClock {
     }
 
     start() {
-        function checkClock() {
+        function checkClock(call) {
 
-            if (this.timerId === null) {
-                this.timerId = setInterval(() => this.alarmCollection.forEach(element => checkClock(element)),)
+            let checkClock = (clock) => {
+                let alarm = this.getCurrentFormattedTime();
+                if (clock.time === alarm) {
+                    return clock.callback();
+                }
+
+                if (this.timerId === null) {
+                    this.timerId = setInterval(() => this.alarmCollection.forEach(element => checkClock(element)),)
+                }
             }
         }
     }
 
     stop() {
-        if (this.timerId !== undefined) {
+        if (this.timerId) {
             clearInterval(this.timerId);
-            return this.timerId = null
         }
     }
 
     printAlarms() {
-        return this.alarmCollection.forEach((item) => item.id + ":" + item.time)
+        this.alarmCollection.forEach((item) => item.id + ":" + item.time)
     }
 
 
