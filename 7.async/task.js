@@ -43,24 +43,24 @@ class AlarmClock {
     }
 
     start() {
-        function checkClock(call) {
 
-            let checkClock = (clock) => {
-                let alarm = this.getCurrentFormattedTime();
-                if (clock.time === alarm) {
-                    return clock.callback();
-                }
-
-                if (this.timerId === null) {
-                    this.timerId = setInterval(() => this.alarmCollection.forEach(element => checkClock(element)),)
-                }
-            }
+        let checkClock = (clock) => {
+            let alarm = this.getCurrentFormattedTime();
+            if (clock.time === alarm) {
+                clock.callback();
+            } 
         }
+
+        if (this.timerId === null) {
+            this.timerId = setInterval(() => this.alarmCollection.forEach(element => checkClock(element)))
+        }
+
     }
 
     stop() {
-        if (this.timerId) {
+        if (this.timerId !== null) {
             clearInterval(this.timerId);
+            this.timerId = null;
         }
     }
 
